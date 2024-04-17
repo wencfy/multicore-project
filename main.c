@@ -37,17 +37,23 @@ int main(int argc, char *argv[]) {
 
     binary_tree_t* tree = new_binary_tree();
 
-    // Output all numbers in the array
+    // Insert all numbers to the tree
+    // for (int i = 0; i < count; i++) {
+    //     binary_tree_insert_serial(tree, new_tree_node(numbers[i]));
+    // }
+
+    #pragma omp parallel for
     for (int i = 0; i < count; i++) {
-        binary_tree_insert_serial(tree, new_tree_node(numbers[i]));
+        binary_tree_insert(tree, new_tree_node(numbers[i]));
     }
 
     // in_order_traverse(tree->root);
 
-    #pragma omp parallel for
-    for (int i = 0; i < count; i++) {
-        binary_tree_node_t* node = binary_tree_search(tree, numbers[i]);
-    }
+    // #pragma omp parallel for
+    // for (int i = 0; i < count; i++) {
+    //     binary_tree_node_t* node = binary_tree_search(tree, numbers[i]);
+    //     // printf("%d found: %d\n", numbers[i], node->value);
+    // }
 
     return EXIT_SUCCESS;
 }
