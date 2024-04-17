@@ -26,10 +26,8 @@ void binary_tree_insert_serial(binary_tree_t* tree, binary_tree_node_t* to_inser
         }
     }
 
-    binary_tree_node_t *parent = NULL;
     binary_tree_node_t *current = tree->root;
     while (current != NULL) {
-        parent = current;
         if (to_insert->value < current->value) {
             if (current->left == NULL) {
                 current->left = to_insert;
@@ -57,29 +55,32 @@ void binary_tree_insert(binary_tree_t* tree, binary_tree_node_t* to_insert) {
         omp_unset_lock(&tree->lock);
     }
 
-    binary_tree_node_t *parent = NULL;
     binary_tree_node_t *current = tree->root;
     omp_set_lock(&current->lock);
 
     while (current != NULL) {
-        // parent = current;
-        omp_unset_lock(&current->lock);
         if (to_insert->value < current->value) {
             if (current->left == NULL) {
                 current->left = to_insert;
+                omp_unset_lock(&current->lock);
                 break;
+            } else {
+                binary_tree_node_t *next = current->left;
+                omp_set_lock(&next->lock);
+                omp_unset_lock(&current->lock);
+                current = next;
             }
-            current = current->left;
         } else {
             if (current->right == NULL) {
                 current->right = to_insert;
+                omp_unset_lock(&current->lock);
                 break;
+            } else {
+                binary_tree_node_t *next = current->right;
+                omp_set_lock(&next->lock);
+                omp_unset_lock(&current->lock);
+                current = next;
             }
-            current = current->right;
-        }
-        
-        if (current) {
-            omp_set_lock(&current->lock);
         }
     }
 }
