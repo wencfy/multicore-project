@@ -55,5 +55,13 @@ int main(int argc, char *argv[]) {
     //     // printf("%d found: %d\n", numbers[i], node->value);
     // }
 
+    // printf("\n----------------------\n");
+    #pragma omp parallel for
+    for (int i = 0; i < count; i++) {
+        binary_tree_delete(tree, numbers[i]);
+    }
+
+    // in_order_traverse(tree->root);
+
     return EXIT_SUCCESS;
 }

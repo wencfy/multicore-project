@@ -1,4 +1,7 @@
 #include <omp.h>
+#ifndef __cplusplus
+#include <stdbool.h>
+#endif
 
 typedef struct binary_tree_node_s {
     int value;
@@ -18,6 +21,8 @@ binary_tree_node_t *new_tree_node(int value);
 void binary_tree_insert_serial(binary_tree_t* tree, binary_tree_node_t* to_insert);
 
 void binary_tree_insert(binary_tree_t* tree, binary_tree_node_t* to_insert);
+
+bool binary_tree_delete(binary_tree_t *tree, int to_delete);
 
 binary_tree_node_t* binary_tree_search(binary_tree_t* tree, int value);
 
