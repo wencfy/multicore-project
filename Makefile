@@ -1,4 +1,4 @@
-CC=/opt/homebrew/Cellar/llvm/17.0.6_1/bin/clang
+# CC=/opt/homebrew/Cellar/llvm/17.0.6_1/bin/clang
 
 CFLAGS = -g -Wall -std=c99 -fopenmp
 CXXFLAGS = -g -Wall -fopenmp
